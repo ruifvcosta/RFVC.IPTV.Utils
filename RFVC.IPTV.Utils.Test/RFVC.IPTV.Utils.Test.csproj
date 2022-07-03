@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RFVC.M3u.Utils\RFVC.IPTV.Utils.Net6.csproj" />
+    <ProjectReference Include="..\RFVC.IPTV.Utils\RFVC.IPTV.Utils.Net6.csproj" />
   </ItemGroup>
 
   <ItemGroup>
