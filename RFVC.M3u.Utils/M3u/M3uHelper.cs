@@ -9,7 +9,8 @@
         {
             Tv = 0,
             Video = 1,
-            Music = 2
+            Music = 2,
+            Undefined = 3
         }
 
         /// <summary>
@@ -129,10 +130,14 @@
 
             switch (extension)
             {
-                case ".mp4": case ".avi": case ".mkv": case ".flv": case ".wmv": case ".mpeg":
+                case ".mp4": case ".avi": case ".mkv": case ".flv": case ".wmv": case ".mpeg":  case ".ts":
                     return (int)FileItemType.Video;
-                default:
+                case ".mp3": case ".flac": case ".aac": case ".wav":
                     return (int)FileItemType.Music;
+                case ".m3u": case ".m3u8":
+                    return (int)FileItemType.Undefined;
+                default:
+                    return (int)FileItemType.Undefined;
 
             }
 

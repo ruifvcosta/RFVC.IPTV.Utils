@@ -41,7 +41,7 @@ namespace RFVC.IPTV.Guide
 
             var result = new List<TvGuideItem>();
 
-            foreach (var item in fileItems.Where(f => f.Type == (int)FileItemType.Tv && !string.IsNullOrEmpty(f.GuideID)))
+            foreach (var item in fileItems.Where(f => (f.Type == (int)FileItemType.Tv || f.Type == (int)FileItemType.Undefined) && !string.IsNullOrEmpty(f.GuideID)))
             {
                 var programs = guideContent.programme.Where(f => f.channel == item.GuideID && DateTime.ParseExact(f.stop, "yyyyMMddHHmmss zzz", null) >= DateTime.Now).OrderBy(f => f.start).ToList();
                 if (programs != null)
