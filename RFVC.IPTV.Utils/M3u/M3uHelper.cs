@@ -75,7 +75,7 @@
         /// <param name="fileContent">M3u File Content</param>
         /// <param name="groups">List containing the filters for the groups</param>
         /// <returns> Filtered M3u File text than can be saved into a file</returns>
-        public static string FilterM3uFileByGroup(string fileContent, IList<string> groups)
+        public static string FilterM3uFileByGroup(string fileContent, IList<string>? groups)
         {
             if (string.IsNullOrEmpty(fileContent))
                 throw new ArgumentNullException(nameof(fileContent));
