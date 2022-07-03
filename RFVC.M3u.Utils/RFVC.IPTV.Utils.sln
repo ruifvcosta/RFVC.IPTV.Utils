@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RFVC.IPTV.Utils.Net6", "RFVC.IPTV.Utils.Net6.csproj", "{18A83CD5-C0E8-4A8B-A78E-515B4074573A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RFVC.IPTV.Utils.Test", "..\RFVC.IPTV.Utils.Test\RFVC.IPTV.Utils.Test.csproj", "{E22032AD-4C50-4F62-BA63-E8C2D4AB224D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{18A83CD5-C0E8-4A8B-A78E-515B4074573A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18A83CD5-C0E8-4A8B-A78E-515B4074573A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18A83CD5-C0E8-4A8B-A78E-515B4074573A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E22032AD-4C50-4F62-BA63-E8C2D4AB224D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E22032AD-4C50-4F62-BA63-E8C2D4AB224D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E22032AD-4C50-4F62-BA63-E8C2D4AB224D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E22032AD-4C50-4F62-BA63-E8C2D4AB224D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
