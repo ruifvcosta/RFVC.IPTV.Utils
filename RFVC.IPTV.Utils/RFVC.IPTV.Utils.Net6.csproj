@@ -4,6 +4,11 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-  </PropertyGroup>
+    <PackageTags>m3u, xmltv, iptv</PackageTags>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Description>Utilitys to work with m3u files and xmltv files</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/ruifvcosta/RFVC.IPTV.Utils</RepositoryUrl>
+  </PropertyGroup>  
 
 </Project>

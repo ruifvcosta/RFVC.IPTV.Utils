@@ -22,6 +22,8 @@ namespace RFVC.IPTV.M3u
         public string? Group { get;  set; }
 
         public int Type { get; set; }
+
+        public string? Original { get; set; }
     }
 
 }
