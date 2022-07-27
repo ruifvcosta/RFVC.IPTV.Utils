@@ -14,6 +14,16 @@ If there is a m3u list that dosen´t work with this code, share an example or sa
 
 This is used on my own projects... will share it later
 
+## Change Log
+### 1.1.0
+
+- Added Download Method and Parse
+- Extended M3uItem to include original content
+
+### 1.0.0
+
+- Initial Version
+
 ## Main Functions
 
 ### M3u
