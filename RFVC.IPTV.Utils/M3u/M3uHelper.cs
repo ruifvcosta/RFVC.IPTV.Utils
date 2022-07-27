@@ -22,8 +22,8 @@
         public static IList<M3uFileItem> GetM3UFileItems(string fileContent, int? maxItems = null)
         {
             if (string.IsNullOrEmpty(fileContent))
-                throw new ArgumentNullException(nameof(fileContent));   
-    
+                throw new ArgumentNullException(nameof(fileContent));
+
             var result = new List<M3uFileItem>();
             using (StringReader reader = new StringReader(fileContent))
             {
@@ -31,7 +31,7 @@
                 M3uFileItem? item = null;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    if (maxItems !=null)
+                    if (maxItems != null)
                         if (result.Count >= maxItems.Value)
                             return result;
 
@@ -53,6 +53,8 @@
                             {
                                 if (Uri.IsWellFormedUriString(line, UriKind.Absolute))
                                     item.Location = line;
+
+                                item.Original += "\n" + line;
                             }
                         }
                     }
@@ -130,17 +132,69 @@
 
             switch (extension)
             {
-                case ".mp4": case ".avi": case ".mkv": case ".flv": case ".wmv": case ".mpeg":  case ".ts":
+                case ".mp4":
+                case ".avi":
+                case ".mkv":
+                case ".flv":
+                case ".wmv":
+                case ".mpeg":
+                case ".ts":
                     return (int)FileItemType.Video;
-                case ".mp3": case ".flac": case ".aac": case ".wav":
+                case ".mp3":
+                case ".flac":
+                case ".aac":
+                case ".wav":
                     return (int)FileItemType.Music;
-                case ".m3u": case ".m3u8":
+                case ".m3u":
+                case ".m3u8":
                     return (int)FileItemType.Undefined;
                 default:
                     return (int)FileItemType.Undefined;
 
             }
 
+        }
+
+
+
+        /// <summary>
+        /// Downloads List and filters
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="groups"></param>
+        /// <returns>Filtered M3u File text than can be saved into a file</returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static async Task<string> DownloadAndFilterM3uList(string? url, string? groups)
+        {
+
+            if (string.IsNullOrEmpty(url))
+                throw new ArgumentNullException(nameof(url));
+
+            using (var httpClient = new HttpClient())
+            {
+                httpClient.Timeout = System.TimeSpan.FromMinutes(1);
+                using (var response = await httpClient.GetAsync(url))
+                {
+
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+
+                    if (string.IsNullOrEmpty(apiResponse))
+                        return "";
+
+                    if (string.IsNullOrEmpty(groups))
+                        return apiResponse;
+                    else
+                    {
+                        List<string> filters = groups.ToLower().Split("|").ToList();
+                        string parsedFile = M3uHelper.FilterM3uFileByGroup(apiResponse, filters);
+                        if (string.IsNullOrEmpty(parsedFile) || parsedFile == "#EXTM3U\r\n")
+                            return apiResponse;
+                        else
+                            return parsedFile;
+                    }
+
+                }
+            }
         }
 
         #endregion
@@ -171,6 +225,8 @@
                 item.Name = SplitedLines[SplitedLines.Count() - 1].
                              Substring(SplitedLines[SplitedLines.Count() - 1].IndexOf(",") + 1);
 
+            //save the original content
+            item.Original = line;
             return item;
         }
 

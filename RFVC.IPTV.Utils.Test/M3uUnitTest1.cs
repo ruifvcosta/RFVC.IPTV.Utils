@@ -1,10 +1,23 @@
 using RFVC.IPTV.M3u;
 
-namespace RFVC.IPTV.Utils.Test
+namespace RFVC.IPTV.Test
 {
     [TestClass]
     public class M3uUnitTest1
     {
+
+        [TestMethod]
+        public void TestM3uDownloadAndListParser()
+        {
+            string testUrl = "https://iptv-org.github.io/iptv/countries/pt.m3u";
+            string groups = "news";
+           
+            string filecontent =  M3u.M3uHelper.DownloadAndFilterM3uList(testUrl, groups).Result;
+            var lista = M3uHelper.GetM3UFileItems(filecontent);
+            Assert.IsNotNull(lista);
+           // Assert.AreEqual(100, lista.Count);
+        }
+
         [TestMethod]
         public void TestM3uListParser()
         {
