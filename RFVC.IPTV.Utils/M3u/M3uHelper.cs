@@ -1,4 +1,6 @@
-﻿namespace RFVC.IPTV.M3u
+﻿using RFVC.IPTV.Utils.Net6.Helpers;
+
+namespace RFVC.IPTV.M3u
 {
     public static class M3uHelper
     {
@@ -122,6 +124,61 @@
                 return writer.ToString();
             }
         }
+
+        /// <summary>
+        /// Tries to add logo information missing based on similar items of the same group.
+        /// Copys the logo information of an item to another item with that has almost the same name
+        /// ex: SPORT 1 and SPORT 1 HD
+        /// The accuracy depends on the original information.. it tries its best..
+        /// </summary>
+        /// <param name="library"></param>
+        /// <param name="minBestMatch">Use value between 0.7 and 0.99</param>
+        public static void CompleteLogoInformation(IList<M3uFileItem> library, double minBestMatch = 0.85)
+        {
+            if (library == null)
+                throw new ArgumentNullException(nameof(library));
+
+            var emptyLogoList = library.Where((f) => f.LogoLocation == "").ToList();
+            foreach (var item in emptyLogoList)
+            {
+                M3uFileItem? bestMach = null;
+                double bestvalue = 0;
+                var sameGroupList = library.Where((f) => f.Group == item.Group && f.LogoLocation != "").ToList();
+                foreach (var itemInGroup in sameGroupList)
+                {
+                    if (!string.IsNullOrEmpty(item.Name) && !string.IsNullOrEmpty(itemInGroup.Name))
+                    {
+                        var calculatedValue = StringHelper.CalculateSimilarity(item.Name, itemInGroup.Name);
+                        if (calculatedValue > minBestMatch)
+                        {
+                            if (calculatedValue > bestvalue)
+                            {
+                                int differentChar = StringHelper.FirstDiferentCaracter(item.Name, itemInGroup.Name);
+                                if (differentChar > -1)
+                                {
+                                    if (!Char.IsNumber(itemInGroup.Name.Length > item.Name.Length ? itemInGroup.Name[differentChar] : item.Name[differentChar]))
+                                    {
+                                        bestMach = itemInGroup;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+                if (bestMach == null)
+                    bestMach = library.OrderByDescending((o) => o.Name?.Length).FirstOrDefault((f) => f.Group == item.Group && f.LogoLocation != "" && f.Name?.ToLower().StartsWith(item.Name?.ToLower()) == true);
+
+                if (bestMach == null)
+                    bestMach = library.OrderByDescending((o) => o.Name?.Length).FirstOrDefault((f) => f.Group == item.Group && f.LogoLocation != "" && item.Name?.Contains(f.Name, StringComparison.OrdinalIgnoreCase) == true);
+
+                if (bestMach != null)
+                {
+                    item.LogoLocation = bestMach.LogoLocation;
+                }
+            }
+        }
+
 
 
         public static int GetM3uFileType(string location)

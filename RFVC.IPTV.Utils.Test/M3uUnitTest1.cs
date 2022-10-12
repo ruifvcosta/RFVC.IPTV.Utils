@@ -11,11 +11,11 @@ namespace RFVC.IPTV.Test
         {
             string testUrl = "https://iptv-org.github.io/iptv/countries/pt.m3u";
             string groups = "news";
-           
-            string filecontent =  M3u.M3uHelper.DownloadAndFilterM3uList(testUrl, groups).Result;
+
+            string filecontent = M3u.M3uHelper.DownloadAndFilterM3uList(testUrl, groups).Result;
             var lista = M3uHelper.GetM3UFileItems(filecontent);
             Assert.IsNotNull(lista);
-           // Assert.AreEqual(100, lista.Count);
+            // Assert.AreEqual(100, lista.Count);
         }
 
         [TestMethod]
@@ -28,11 +28,26 @@ namespace RFVC.IPTV.Test
             Assert.AreEqual(100, lista.Count);
         }
 
+
+        [TestMethod]
+        public void TestLogoMissing()
+        {
+            string filecontent = GetDummyFileContent("portugal_logo_teste.m3u8");
+            var lista = M3uHelper.GetM3UFileItems(filecontent);
+            Assert.IsNotNull(lista);
+            int noLogo = lista.Count((f) => string.IsNullOrEmpty(f.LogoLocation));
+            M3uHelper.CompleteLogoInformation(lista);
+            int noLogo2 = lista.Count((f) => string.IsNullOrEmpty(f.LogoLocation));
+
+            Assert.AreNotEqual(noLogo, noLogo2);
+        }
+
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestM3uListParserEmptyArgument()
-        {          
-          M3uHelper.GetM3UFileItems("");       
+        {
+            M3uHelper.GetM3UFileItems("");
         }
 
         [TestMethod]
