@@ -20,6 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="portugal_logo_teste.m3u8">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="portugal_teste.m3u8">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
