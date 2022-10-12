@@ -16,6 +16,11 @@ If there is a m3u list that dosen´t work with this code, share an example or sa
 This is used on my own projects... will share it later
 
 ## Change Log
+
+### 1.2.0
+
+- Added CompleteLogoInformation Method 
+
 ### 1.1.0
 
 - Added Download Method and Parse
@@ -32,6 +37,7 @@ This is used on my own projects... will share it later
 |--| --|
 | GetM3UFileItems | Converts m3u file content into list of objects to use |
 |FilterM3uFileByGroup| filters the content of an m3u file by groups |
+|CompleteLogoInformation | tries to fill missing logo within the list |
 
 ### TvGuide
 
